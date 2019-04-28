@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" itemscope itemtype="https://schema.org/Game">
+  <head>
+    <title>Xiongqi - Échecs Panda</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Règles complètes du Xiongqi (Échecs Panda), un jeu de stratégie abstrait dérivé du Xiangqi et joué sur un plateau 8×8, décrivant les pièces, leurs mouvements et les conditions de fin de partie.">
+    <meta name="keywords" content="Xiangqi, 熊棋, ションチー, Xiongqi, règles, Échecs Panda, jeu">
+
+    <meta property="og:title" content="Xiongqi">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fr.xiongqi.page/">
+    <meta property="og:image" content="https://fr.xiongqi.page/img/xiongqi-starting-position.webp">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Xiongqi - Échecs Panda">
+    <meta name="twitter:image" content="https://fr.xiongqi.page/img/xiongqi-starting-position.webp">
+
+    <link rel="icon" type="image/svg+xml" sizes="any" href="favicon.svg">
+
+    <link rel="alternate" hreflang="en" href="https://en.xiongqi.page/">
+    <link rel="alternate" hreflang="fr" href="https://fr.xiongqi.page/">
+    <link rel="alternate" hreflang="ja" href="https://ja.xiongqi.page/">
+    <link rel="alternate" hreflang="th" href="https://th.xiongqi.page/">
+    <link rel="alternate" hreflang="zh" href="https://zh.xiongqi.page/">
+    <link rel="alternate" hreflang="x-default" href="https://xiongqi.page/">
+
+    <link rel="canonical" href="https://fr.xiongqi.page/">
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Game",
+        "@id": "https://fr.xiongqi.page/#game",
+        "name": "Xiongqi — Échecs Panda",
+        "alternateName": [
+          "熊棋",
+          "Xiongqi",
+          "Échecs Panda"
+        ],
+        "description": "Règles complètes du Xiongqi (Échecs Panda), un jeu de stratégie abstrait dérivé du Xiangqi et joué sur un plateau 8×8, décrivant les pièces, leurs mouvements et les conditions de fin de partie.",
+        "keywords": "Xiangqi, 熊棋, ションチー, Xiongqi, règles, Échecs Panda, jeu, échecs chinois, variante, jeu de plateau",
+        "image": "https://fr.xiongqi.page/img/xiongqi-starting-position.webp",
+        "url": "https://fr.xiongqi.page/",
+        "inLanguage": "fr",
+        "numberOfPlayers": {
+          "@type": "QuantitativeValue",
+          "minValue": 2,
+          "maxValue": 2
+        },
+        "creator": {
+          "@type": "Person",
+          "name": "Cyril Veltin"
+        },
+        "license": "Public domain",
+        "isBasedOn": {
+          "@type": "ShortStory",
+          "name": "Le rêve de Zhang",
+          "url": "https://fr.xiongqi.page/legende-urbaine/",
+          "inLanguage": "fr",
+          "author": {
+            "@type": "Person",
+            "name": "Cyril Veltin"
+          },
+          "license": "Public domain"
+        },
+        "sameAs": [
+          "https://xiongqi.page/",
+          "https://en.xiongqi.page/",
+          "https://zh.xiongqi.page/",
+          "https://th.xiongqi.page/",
+          "https://ja.xiongqi.page/"
+        ],
+        "datePublished": "2019-04-28"
+      }
+    </script>
+
+    <style>
+      header {
+        display: flex;
+        gap: 1em;
+      }
+
+      article figure,
+      header figure,
+      header p {
+        margin: 0;
+      }
+
+      article figure img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+
+      article figure figcaption {
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+      }
+
+      nav[aria-label="Table des matières"] {
+        display: inline-block;
+        margin: 1em 0;
+        padding: 1em;
+        background: #ccc;
+        border-radius: 1em;
+      }
+
+      nav[aria-label="Table des matières"] ol {
+        margin: 0;
+        padding-left: 1.5em;
+      }
+
+      nav[aria-label="Table des matières"] li {
+        margin: 0.3em 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <figure>
+        <img src="favicon.svg" alt="Logo Xiongqi" height="64" width="64">
+      </figure>
+
+      <p>
+        Le Xiongqi (熊棋), également appelé <q>Échecs Panda</q>, est un jeu de stratégie abstrait dérivé du Xiangqi (échecs chinois)
+        et adapté à un plateau 8×8.<br>
+        Le présent document décrit les règles nécessaires et suffisantes pour implémenter le jeu sans ambiguïté.
+      </p>
+    </header>
+
+    <hr>
+
+    <main>
+      <article>
+        <h1>Règles du jeu</h1>
+
+        <nav aria-label="Table des matières">
+          <strong>Sommaire</strong>
+          <ol>
+            <li><a href="#notions-generales">Notions générales</a></li>
+            <li><a href="#plateau-position">Plateau et position initiale</a></li>
+            <li><a href="#mouvement-capture">Principes de mouvement, capture et pièces</a></li>
+            <li><a href="#face-a-face-dragon">Face-à-face des généraux et Dragon</a></li>
+            <li><a href="#promotion">Promotion des soldats</a></li>
+            <li><a href="#fin-de-partie">Fin de partie</a></li>
+          </ol>
+        </nav>
+
+        <section id="notions-generales">
+          <h2>1. Notions générales</h2>
+
+          <ul>
+            <li>Le jeu oppose deux joueurs : le joueur Sud et le joueur Nord.</li>
+            <li>Le joueur Sud joue toujours le premier coup.</li>
+            <li>Les joueurs jouent ensuite alternativement, un coup chacun.</li>
+            <li>Un coup consiste à déplacer une seule pièce de son propre camp, selon les règles décrites ci-dessous.</li>
+            <li>
+              La pièce terminale du jeu est le général (éventuellement remplacé par un dragon).
+              <strong>Sa capture met immédiatement fin à la partie</strong>.
+            </li>
+            <li>
+              Il n’existe pas de règle rendant un coup illégal au motif qu’il exposerait la pièce terminale :
+              la partie se décide par la capture de cette pièce, ou par les autres conditions de fin décrites plus loin.
+            </li>
+          </ul>
+        </section>
+
+        <section id="plateau-position">
+          <h2>2. Plateau et position initiale</h2>
+
+          <section id="plateau">
+            <h3>2.1 Plateau</h3>
+
+            <ul>
+              <li>Le Xiongqi se joue sur un plateau de 8 colonnes sur 8 rangées (8×8).</li>
+              <li>Les colonnes sont désignées, du point de vue du joueur Sud, de gauche à droite par les lettres : a, b, c, d, e, f, g, h.</li>
+              <li>Les rangées sont numérotées, du point de vue du joueur Sud, de bas en haut : 1, 2, 3, 4, 5, 6, 7, 8.</li>
+              <li>Le joueur Sud occupe les rangées proches de 1, le joueur Nord celles proches de 8.</li>
+              <li>La <q>rivière</q> se situe entre les rangées 4 et 5.</li>
+            </ul>
+          </section>
+
+          <section id="pieces">
+            <h3>2.2 Pièces</h3>
+
+            <p>Chaque camp dispose des pièces suivantes au début de la partie :</p>
+
+            <ul>
+              <li>1 général</li>
+              <li>1 garde</li>
+              <li>2 chariots</li>
+              <li>2 ours</li>
+              <li>2 chevaux</li>
+              <li>2 canons</li>
+              <li>8 soldats</li>
+            </ul>
+
+            <p>
+              Le dragon ne fait <em>pas</em> partie de la mise en place initiale :
+              il apparaît uniquement si les deux généraux se retrouvent en face-à-face.
+            </p>
+          </section>
+
+          <section id="position-initiale">
+            <h3>2.3 Position initiale</h3>
+
+            <p>La position initiale est structurellement identique pour les deux camps, disposée en miroir.</p>
+
+            <figure>
+              <img
+                src="img/xiongqi-starting-position.webp"
+                alt="Diagramme de la position initiale : sur la première rangée de chaque camp, de gauche à droite : chariot, cheval, ours, garde, général, ours, cheval, chariot. Sur la deuxième rangée, un canon en c et un canon en f. Sur la troisième rangée, huit soldats alignés."
+                height="769"
+                width="768">
+
+              <figcaption>Position initiale d'une partie de Xiongqi</figcaption>
+            </figure>
+
+            <section id="camp-sud">
+              <h4>2.3.1 Camp Sud</h4>
+
+              <ul>
+                <li>Rangée 1 (de a1 à h1) : chariot, cheval, ours, garde, général, ours, cheval, chariot.</li>
+                <li>Rangée 2 : un canon en c2 et un canon en f2 ; les autres cases sont vides.</li>
+                <li>Rangée 3 : un soldat sur chaque case (a3 à h3).</li>
+              </ul>
+            </section>
+
+            <section id="camp-nord">
+              <h4>2.3.2 Camp Nord</h4>
+
+              <ul>
+                <li>Rangée 8 (de a8 à h8) : chariot, cheval, ours, garde, général, ours, cheval, chariot.</li>
+                <li>Rangée 7 : un canon en c7 et un canon en f7 ; les autres cases sont vides.</li>
+                <li>Rangée 6 : un soldat sur chaque case (a6 à h6).</li>
+              </ul>
+            </section>
+          </section>
+
+          <section id="designation-pieces">
+            <h3>2.4 Conventions de désignation des pièces</h3>
+
+            <p>
+              Par convention, chaque type de pièce est associé à un caractère chinois et à une abréviation
+              latine distincte pour le camp Sud (lettre majuscule) et le camp Nord (lettre minuscule).
+              Ces conventions sont utilisées dans certains systèmes de notation et d'implémentation,
+              mais ne modifient en rien les règles de mouvement.
+            </p>
+
+            <table>
+              <caption>Désignation des pièces par camp</caption>
+              <thead>
+                <tr>
+                  <th rowspan="2" scope="col">Type de pièce</th>
+                  <th colspan="2" scope="colgroup">Camp Sud</th>
+                  <th colspan="2" scope="colgroup">Camp Nord</th>
+                </tr>
+                <tr>
+                  <th scope="col">Caractère</th>
+                  <th scope="col"><abbr title="Abréviation">Abrév.</abbr></th>
+                  <th scope="col">Caractère</th>
+                  <th scope="col"><abbr title="Abréviation">Abrév.</abbr></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Garde</th>
+                  <td>仕</td>
+                  <td><code>A</code></td>
+                  <td>士</td>
+                  <td><code>a</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Ours</th>
+                  <td>雄</td>
+                  <td><code>B</code></td>
+                  <td>熊</td>
+                  <td><code>b</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Canon</th>
+                  <td>炮</td>
+                  <td><code>C</code></td>
+                  <td>砲</td>
+                  <td><code>c</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Dragon</th>
+                  <td>鳳</td>
+                  <td><code>D</code></td>
+                  <td>龍</td>
+                  <td><code>d</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Impératrice</th>
+                  <td>妃</td>
+                  <td><code>E</code></td>
+                  <td>騛</td>
+                  <td><code>e</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Général</th>
+                  <td>帥</td>
+                  <td><code>G</code></td>
+                  <td>將</td>
+                  <td><code>g</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Cheval</th>
+                  <td>傌</td>
+                  <td><code>H</code></td>
+                  <td>馬</td>
+                  <td><code>h</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Chariot</th>
+                  <td>俥</td>
+                  <td><code>R</code></td>
+                  <td>車</td>
+                  <td><code>r</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Soldat</th>
+                  <td>兵</td>
+                  <td><code>S</code></td>
+                  <td>卒</td>
+                  <td><code>s</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </section>
+
+        <section id="mouvement-capture">
+          <h2>3. Principes de mouvement, capture et pièces</h2>
+
+          <section id="principes-generaux">
+            <h3>3.1 Principes généraux</h3>
+
+            <ul>
+              <li>À son tour, un joueur déplace exactement une pièce de son camp.</li>
+              <li>Un coup consiste à déplacer une pièce d’une case de départ vers une case d’arrivée.</li>
+              <li>La case d’arrivée doit être soit vide, soit occupée par une pièce adverse.</li>
+              <li>Une pièce ne peut jamais se déplacer sur une case occupée par une pièce de son propre camp.</li>
+              <li>
+                Si la case d’arrivée est occupée par une pièce adverse, cette pièce est capturée :
+                elle est retirée du plateau et la pièce jouée prend sa place.
+              </li>
+              <li>
+                Sauf indication contraire dans la description d’une pièce, une pièce ne peut pas <q>sauter</q> :
+                toutes les cases situées entre la case de départ et la case d’arrivée doivent être vides.
+              </li>
+            </ul>
+          </section>
+
+          <section id="pieces-mouvements">
+            <h3>3.2 Pièces</h3>
+
+            <p>
+              Les sections suivantes décrivent, pour chaque type de pièce, ses règles de déplacement et de capture.
+              Sauf mention explicite, une pièce capture en se déplaçant selon ses règles normales sur une case occupée par une pièce adverse.
+            </p>
+
+            <section id="garde">
+              <h4>3.2.1 Garde</h4>
+
+              <ul>
+                <li>Le garde se déplace d’une case en diagonale.</li>
+                <li>Il capture sur une case diagonalement adjacente.</li>
+                <li>Il n’est pas confiné à un palais : il peut se déplacer librement sur toute case du plateau.</li>
+              </ul>
+            </section>
+
+            <section id="ours">
+              <h4>3.2.2 Ours</h4>
+
+              <ul>
+                <li>L’ours se déplace d’un nombre quelconque de cases en diagonale.</li>
+                <li>Il ne peut pas sauter : toutes les cases intermédiaires doivent être vides.</li>
+                <li>Il capture sur une case située sur la même diagonale.</li>
+              </ul>
+            </section>
+
+            <section id="canon">
+              <h4>3.2.3 Canon</h4>
+
+              <dl>
+                <dt>Déplacement sans capture</dt>
+                <dd>
+                  <ul>
+                    <li>Le canon se déplace comme un chariot : horizontalement ou verticalement, d’un nombre quelconque de cases.</li>
+                    <li>Toutes les cases intermédiaires doivent être vides.</li>
+                  </ul>
+                </dd>
+
+                <dt>Capture</dt>
+                <dd>
+                  <ul>
+                    <li>Le canon doit être aligné avec sa cible (même rangée ou même colonne).</li>
+                    <li>
+                      Entre le canon et la cible, il doit y avoir <strong>exactement une</strong> pièce (de n’importe quel camp),
+                      appelée l’<q>écran</q>.
+                    </li>
+                    <li>Aucune autre pièce ne doit se trouver entre l’écran et la cible.</li>
+                    <li>Le canon capture en se déplaçant sur la case de la cible (en <q>sautant</q> l’écran).</li>
+                  </ul>
+                </dd>
+              </dl>
+
+              <p>
+                Un canon ne peut pas capturer s’il n’y a pas d’écran, ni s’il y a deux pièces (ou plus) entre lui et la cible.
+              </p>
+            </section>
+
+            <section id="dragon">
+              <h4>3.2.4 Dragon</h4>
+
+              <p>
+                Le dragon (aussi appelé <q>général volant</q>) apparaît uniquement après la transformation des deux généraux lors d’un face-à-face.
+                Une fois apparu, il remplace définitivement le général de son camp.
+              </p>
+
+              <dl>
+                <dt>Déplacement sans capture</dt>
+                <dd>
+                  <ul>
+                    <li>Le dragon se déplace d’une case, horizontalement ou verticalement.</li>
+                  </ul>
+                </dd>
+
+                <dt>Capture</dt>
+                <dd>
+                  <ul>
+                    <li>Le dragon capture comme un chariot : sur sa rangée ou sa colonne, à n’importe quelle distance.</li>
+                    <li>Il ne peut pas sauter : toutes les cases entre le dragon et la cible doivent être vides.</li>
+                    <li>La capture se fait en se déplaçant sur la case de la pièce capturée.</li>
+                  </ul>
+                </dd>
+              </dl>
+            </section>
+
+            <section id="imperatrice">
+              <h4>3.2.5 Impératrice</h4>
+
+              <p>
+                L’impératrice combine deux modes de déplacement distincts. À chaque coup, elle choisit <em>un seul</em> mode.
+              </p>
+
+              <dl>
+                <dt>Mode chariot</dt>
+                <dd>
+                  <ul>
+                    <li>L’impératrice se déplace horizontalement ou verticalement, d’un nombre quelconque de cases.</li>
+                    <li>Elle ne peut pas sauter : toutes les cases intermédiaires doivent être vides.</li>
+                  </ul>
+                </dd>
+
+                <dt>Mode cavalier</dt>
+                <dd>
+                  <ul>
+                    <li>L’impératrice effectue un déplacement en <q>L</q> : deux cases dans une direction orthogonale, puis une case perpendiculairement.</li>
+                    <li>Elle peut sauter par-dessus les pièces intermédiaires.</li>
+                  </ul>
+                </dd>
+              </dl>
+
+              <p>
+                <strong>Note :</strong> ce <q>mode cavalier</q> diffère du mouvement du cheval, car il autorise le saut.
+              </p>
+            </section>
+
+            <section id="general">
+              <h4>3.2.6 Général</h4>
+
+              <ul>
+                <li>Le général se déplace d’une case, horizontalement ou verticalement.</li>
+                <li>Il capture sur une case orthogonalement adjacente.</li>
+                <li>Il n’est pas confiné à un palais : il peut se déplacer librement sur toute case du plateau.</li>
+              </ul>
+            </section>
+
+            <section id="cheval">
+              <h4>3.2.7 Cheval</h4>
+
+              <ul>
+                <li>
+                  Le déplacement du cheval s’effectue en deux étapes :
+                  <ol>
+                    <li>une case dans une direction orthogonale (haut, bas, gauche ou droite) depuis la case de départ ;</li>
+                    <li>puis une case en diagonale, vers l’extérieur, à partir de cette position intermédiaire.</li>
+                  </ol>
+                </li>
+                <li>
+                  Le cheval ne saute pas : la case orthogonale adjacente (la <q>jambe</q> du cheval) doit être vide.
+                  Si elle est occupée, le déplacement dans cette direction est bloqué.
+                </li>
+                <li>La case d’arrivée doit être vide ou occupée par une pièce adverse, qui est alors capturée.</li>
+              </ul>
+            </section>
+
+            <section id="chariot">
+              <h4>3.2.8 Chariot</h4>
+
+              <ul>
+                <li>Le chariot se déplace d’un nombre quelconque de cases, horizontalement ou verticalement.</li>
+                <li>Il ne peut pas sauter : toutes les cases intermédiaires doivent être vides.</li>
+                <li>Il capture sur une case située sur la même rangée ou colonne.</li>
+              </ul>
+            </section>
+
+            <section id="soldat">
+              <h4>3.2.9 Soldat</h4>
+
+              <p>Les soldats de chaque camp avancent dans des directions opposées :</p>
+
+              <ul>
+                <li>Les soldats du camp Sud avancent vers le Nord (rangées croissantes : de 3 vers 8).</li>
+                <li>Les soldats du camp Nord avancent vers le Sud (rangées décroissantes : de 6 vers 1).</li>
+              </ul>
+
+              <section id="soldat-avant-riviere">
+                <h5>3.2.9.1 Avant la rivière</h5>
+
+                <ul>
+                  <li>Un soldat du camp Sud est <q>avant la rivière</q> tant qu’il occupe une case des rangées 1 à 4.</li>
+                  <li>Un soldat du camp Nord est <q>avant la rivière</q> tant qu’il occupe une case des rangées 5 à 8.</li>
+                  <li>
+                    Avant la rivière, un soldat :
+                    <ul>
+                      <li>se déplace d’une case vers l’avant uniquement ;</li>
+                      <li>capture de la même manière (une case vers l’avant) ;</li>
+                      <li>ne peut ni reculer, ni se déplacer latéralement.</li>
+                    </ul>
+                  </li>
+                </ul>
+              </section>
+
+              <section id="soldat-apres-riviere">
+                <h5>3.2.9.2 Après la rivière</h5>
+
+                <ul>
+                  <li>Un soldat du camp Sud a <q>traversé la rivière</q> dès qu’il atteint la rangée 5 ou au-delà.</li>
+                  <li>Un soldat du camp Nord a <q>traversé la rivière</q> dès qu’il atteint la rangée 4 ou en deçà.</li>
+                  <li>
+                    Après la rivière, un soldat :
+                    <ul>
+                      <li>conserve son déplacement d’une case vers l’avant ;</li>
+                      <li>gagne la possibilité de se déplacer d’une case latéralement (gauche ou droite) ;</li>
+                      <li>capture vers l’avant ou latéralement ;</li>
+                      <li>ne peut toujours pas reculer.</li>
+                    </ul>
+                  </li>
+                </ul>
+              </section>
+            </section>
+          </section>
+        </section>
+
+        <section id="face-a-face-dragon">
+          <h2>4. Face-à-face des généraux et Dragon</h2>
+
+          <section id="face-a-face">
+            <h3>4.1 Face-à-face des généraux et transformation en dragon</h3>
+
+            <p>Les deux généraux sont dits <q>en face-à-face</q> lorsque :</p>
+
+            <ul>
+              <li>ils occupent la même colonne ;</li>
+              <li>aucune pièce ne se trouve entre eux ;</li>
+              <li>le général Sud se trouve sur une rangée inférieure à celle du général Nord.</li>
+            </ul>
+
+            <p>
+              <strong>Dès que cette configuration survient, les deux généraux se transforment immédiatement en dragons</strong>
+              (le légendaire <q>général volant</q>).
+            </p>
+
+            <ul>
+              <li>La transformation s'applique aux deux camps, même si un seul camp a joué le coup qui crée le face-à-face.</li>
+              <li>Une fois transformé, un dragon remplace définitivement le général de son camp.</li>
+              <li>La pièce terminale de chaque camp devient alors le dragon.</li>
+            </ul>
+          </section>
+        </section>
+
+        <section id="promotion">
+          <h2>5. Promotion des soldats</h2>
+
+          <ul>
+            <li>Lorsqu'un soldat termine un coup sur la dernière rangée du camp adverse (rangée 8 pour le Sud, rangée 1 pour le Nord), le joueur peut choisir de le promouvoir.</li>
+            <li>La promotion est facultative : le joueur peut laisser le soldat tel quel ou le promouvoir immédiatement.</li>
+            <li>Un soldat présent sur la dernière rangée peut être promu ultérieurement, à condition que le joueur vienne de le déplacer.</li>
+            <li>
+              En cas de promotion, le soldat est retiré et remplacé, sur la même case, par une pièce au choix du joueur parmi :
+              <ul>
+                <li>impératrice,</li>
+                <li>garde,</li>
+                <li>canon,</li>
+                <li>chariot,</li>
+                <li>ours,</li>
+                <li>cheval.</li>
+              </ul>
+            </li>
+            <li>La promotion en général (et donc en dragon) est interdite.</li>
+            <li>Le choix de la pièce promue est libre, indépendamment des pièces déjà présentes ou capturées. Un joueur peut ainsi posséder plusieurs pièces du même type.</li>
+          </ul>
+        </section>
+
+        <section id="fin-de-partie">
+          <h2>6. Fin de partie</h2>
+
+          <section id="victoire-capture">
+            <h3>6.1 Victoire par capture</h3>
+
+            <p>
+              Un camp gagne immédiatement lorsqu'il capture la pièce terminale adverse :
+              le général, ou le dragon si la transformation a eu lieu.
+            </p>
+          </section>
+
+          <section id="blocage">
+            <h3>6.2 Défaite par blocage</h3>
+
+            <p>Un joueur perd immédiatement si, à son tour, il n’a aucun coup légal.</p>
+
+            <p>
+              Un coup est légal s’il respecte :
+              (1) les règles de mouvement/capture,
+              (2) les règles de promotion,
+              et (3) l’interdiction de répétition.
+            </p>
+          </section>
+
+          <section id="nulle-repetition">
+            <h3>6.3 Défaite par répétition de position</h3>
+
+            <p>Les répétitions sont interdites.</p>
+
+            <p>Une position inclut la configuration du plateau et le camp dont c’est le tour de jouer.</p>
+
+            <p>
+              Un coup est considéré comme répétitif (et donc illégal) s’il recrée une position déjà atteinte au cours de la partie
+              à la suite du même coup joué par le même camp
+              (même pièce déplacée, même case d’origine, même case de destination, et même choix de promotion le cas échéant).
+            </p>
+
+            <p>Lorsqu’un joueur joue un coup répétitif, il perd immédiatement la partie.</p>
+          </section>
+
+          <section id="nulle-materielle">
+            <h3>6.4 Nulle par insuffisance matérielle</h3>
+
+            <p>La partie est déclarée nulle si les deux camps ne disposent plus que de leur pièce terminale sur le plateau.</p>
+          </section>
+
+          <section id="nulle-50-coups">
+            <h3>6.5 Nulle par règle des 50 coups</h3>
+
+            <p>La partie est déclarée nulle si cinquante coups se sont écoulés depuis la dernière capture ou la dernière poussée d’un soldat.</p>
+
+            <p>Dans ce décompte, un « coup » désigne un mouvement d’un camp (un demi-coup).</p>
+          </section>
+
+          <section id="autres-fins">
+            <h3>6.6 Autres cas</h3>
+
+            <p>
+              En dehors des cas ci-dessus, la partie peut également s'achever par abandon, dépassement du temps imparti ou accord mutuel de nullité entre les joueurs.
+            </p>
+          </section>
+        </section>
+      </article>
+    </main>
+
+    <hr>
+
+    <nav aria-label="Sélection de langue">
+      <p>Également disponible dans d'autres langues&nbsp;:</p>
+
+      <ul>
+        <li><a title="Passer à l'anglais" href="https://en.xiongqi.page/" lang="en">English</a></li>
+        <li><a title="Passer au chinois" href="https://zh.xiongqi.page/" lang="zh">中文</a></li>
+        <li><a title="Passer au thaï" href="https://th.xiongqi.page/" lang="th">ภาษาไทย</a></li>
+        <li><a title="Passer au japonais" href="https://ja.xiongqi.page/" lang="ja">日本語</a></li>
+      </ul>
+    </nav>
+
+    <hr>
+
+    <footer>
+      <p>
+        Ce jeu trouve son origine dans
+        <a href="legende-urbaine/" title="Le rêve de Zhang" itemprop="isBasedOn" itemscope itemtype="https://schema.org/ShortStory"><span itemprop="name">le rêve troublant d'un paysan nommé Zhang</span></a>.
+        Ses règles, son nom et le logo sont placés dans le domaine public&nbsp;:
+        chacun est libre de les utiliser, les adapter et les diffuser, sur tout support, sans autorisation préalable.
+      </p>
+    </footer>
+  </body>
+</html>
