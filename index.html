@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" itemscope itemtype="https://schema.org/Game">
+  <head>
+    <title>Xiongqi - Échecs Panda</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Règles complètes du Xiongqi (Échecs Panda), un jeu de stratégie abstrait dérivé du Xiangqi et joué sur un plateau 8×8, décrivant les pièces, leurs mouvements et les conditions de fin de partie.">
+    <meta name="keywords" content="Xiangqi, 熊棋, ションチー, Xiongqi, règles, Échecs Panda, jeu">
+
+    <meta property="og:title" content="Xiongqi">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fr.xiongqi.page/">
+    <meta property="og:image" content="https://fr.xiongqi.page/img/xiongqi-starting-position.webp">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Xiongqi - Échecs Panda">
+    <meta name="twitter:image" content="https://fr.xiongqi.page/img/xiongqi-starting-position.webp">
+
+    <link rel="icon" type="image/svg+xml" sizes="any" href="favicon.svg">
+
+    <link rel="alternate" hreflang="en" href="https://en.xiongqi.page/">
+    <link rel="alternate" hreflang="fr" href="https://fr.xiongqi.page/">
+    <link rel="alternate" hreflang="ja" href="https://ja.xiongqi.page/">
+    <link rel="alternate" hreflang="th" href="https://th.xiongqi.page/">
+    <link rel="alternate" hreflang="zh" href="https://zh.xiongqi.page/">
+    <link rel="alternate" hreflang="x-default" href="https://xiongqi.page/">
+
+    <link rel="canonical" href="https://fr.xiongqi.page/">
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Game",
+        "@id": "https://fr.xiongqi.page/#game",
+        "name": "Xiongqi – Échecs Panda",
+        "alternateName": [
+          "熊棋",
+          "Xiongqi",
+          "Échecs Panda"
+        ],
+        "description": "Règles complètes du Xiongqi (Échecs Panda), un jeu de stratégie abstrait dérivé du Xiangqi et joué sur un plateau 8×8, décrivant les pièces, leurs mouvements et les conditions de fin de partie.",
+        "keywords": "Xiangqi, 熊棋, ションチー, Xiongqi, règles, Échecs Panda, jeu, échecs chinois, variante, jeu de plateau",
+        "image": "https://fr.xiongqi.page/img/xiongqi-starting-position.webp",
+        "url": "https://fr.xiongqi.page/",
+        "inLanguage": "fr",
+        "numberOfPlayers": {
+          "@type": "QuantitativeValue",
+          "minValue": 2,
+          "maxValue": 2
+        },
+        "creator": {
+          "@type": "Person",
+          "name": "Cyril Veltin"
+        },
+        "license": "Public domain",
+        "isBasedOn": {
+          "@type": "ShortStory",
+          "name": "Le rêve de Zhang",
+          "url": "https://fr.xiongqi.page/legende-urbaine/",
+          "inLanguage": "fr",
+          "author": {
+            "@type": "Person",
+            "name": "Cyril Veltin"
+          },
+          "license": "Public domain"
+        },
+        "sameAs": [
+          "https://xiongqi.page/",
+          "https://en.xiongqi.page/",
+          "https://zh.xiongqi.page/",
+          "https://th.xiongqi.page/",
+          "https://ja.xiongqi.page/"
+        ],
+        "datePublished": "2019-04-28",
+        "dateModified": "2025-11-15"
+      }
+    </script>
+
+    <style>
+      header {
+        display: flex;
+        gap: 1em;
+      }
+
+      header figure,
+      header p {
+        margin: 0;
+      }
+
+      article figure img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+
+      article figure figcaption {
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <figure>
+        <img src="favicon.svg" alt="Logo Xiongqi" height="64" width="64">
+      </figure>
+
+      <p>
+        Le Xiongqi (熊棋), également appelé <q>Échecs Panda</q>, est un jeu de stratégie abstrait, dérivé du Xiangqi (échecs chinois) et adapté à un plateau 8×8.<br>
+        Le présent document décrit les règles nécessaires et suffisantes pour implémenter le jeu sans ambiguïté.
+      </p>
+    </header>
+
+    <hr>
+
+    <article>
+      <h1>Règles du jeu</h1>
+
+      <h2>1. Notions générales</h2>
+
+      <ul>
+        <li>Le jeu oppose deux joueurs : le joueur Sud et le joueur Nord.</li>
+        <li>Le joueur Sud joue toujours le premier coup.</li>
+        <li>Les joueurs jouent ensuite alternativement un coup chacun.</li>
+        <li>Un coup consiste à déplacer une seule pièce de son propre camp, selon les règles de mouvement ci-dessous.</li>
+        <li>Il n'existe pas de « passe » : à son tour, un joueur doit soit jouer un coup légal, soit la partie est terminée.</li>
+        <li>La pièce terminale du Xiongqi est le roi : la capture ou l'impossibilité de le défendre met fin à la partie.</li>
+      </ul>
+
+      <h2>2. Échiquier et position initiale</h2>
+
+      <h3>2.1 Échiquier</h3>
+
+      <ul>
+        <li>Le Xiongqi se joue sur un échiquier de 8 colonnes par 8 rangées (8×8).</li>
+        <li>Les colonnes (files) sont nommées de gauche à droite du point de vue du joueur Sud : a, b, c, d, e, f, g, h.</li>
+        <li>Les rangées (rangs) sont numérotées de bas en haut du point de vue du joueur Sud : 1, 2, 3, 4, 5, 6, 7, 8.</li>
+        <li>Le joueur Sud occupe les rangées proches de 1, le joueur Nord celles proches de 8.</li>
+        <li>La « rivière » se situe entre les rangées 4 et 5 : le camp Sud contrôle le côté 1–4, le camp Nord contrôle le côté 5–8.</li>
+      </ul>
+
+      <h3>2.2 Pièces</h3>
+
+      <p>Chaque camp dispose des pièces suivantes :</p>
+
+      <ul>
+        <li>1 roi</li>
+        <li>1 impératrice</li>
+        <li>2 tours</li>
+        <li>2 ours</li>
+        <li>2 chevaux</li>
+        <li>2 canons</li>
+        <li>8 pions</li>
+      </ul>
+
+      <h3>2.3 Position initiale</h3>
+
+      <p>La position initiale est la même structurellement pour les deux camps, en miroir.</p>
+
+      <figure>
+        <img
+          src="img/xiongqi-starting-position.webp"
+          alt="Position initiale : première rangée : tour, cheval, ours, impératrice, roi, ours, cheval, tour ; deuxième rangée : canons ; troisième rangée : pions"
+          height="841"
+          width="847">
+
+        <figcaption>Position initiale d'une partie de Xiongqi</figcaption>
+      </figure>
+
+      <h4>2.3.1 Camp Sud</h4>
+
+      <ul>
+        <li>Rang 1 (de a1 à h1) :
+          <ul>
+            <li>a1 : tour</li>
+            <li>b1 : cheval</li>
+            <li>c1 : ours</li>
+            <li>d1 : impératrice</li>
+            <li>e1 : roi</li>
+            <li>f1 : ours</li>
+            <li>g1 : cheval</li>
+            <li>h1 : tour</li>
+          </ul>
+        </li>
+        <li>Rang 2 :
+          <ul>
+            <li>c2 : canon</li>
+            <li>f2 : canon</li>
+            <li>toutes les autres cases du rang 2 sont vides.</li>
+          </ul>
+        </li>
+        <li>Rang 3 :
+          <ul>
+            <li>un pion sud sur chacune des cases a3, b3, c3, d3, e3, f3, g3, h3.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h4>2.3.2 Camp Nord</h4>
+
+      <ul>
+        <li>Rang 8 (de a8 à h8) :
+          <ul>
+            <li>a8 : tour</li>
+            <li>b8 : cheval</li>
+            <li>c8 : ours</li>
+            <li>d8 : impératrice</li>
+            <li>e8 : roi</li>
+            <li>f8 : ours</li>
+            <li>g8 : cheval</li>
+            <li>h8 : tour</li>
+          </ul>
+        </li>
+        <li>Rang 7 :
+          <ul>
+            <li>c7 : canon</li>
+            <li>f7 : canon</li>
+            <li>toutes les autres cases du rang 7 sont vides.</li>
+          </ul>
+        </li>
+        <li>Rang 6 :
+          <ul>
+            <li>un pion nord sur chacune des cases a6, b6, c6, d6, e6, f6, g6, h6.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>2.4 Conventions de désignation des pièces</h3>
+
+      <p>
+        Par convention, chaque type de pièce est associé à un caractère chinois et à une abréviation
+        latine distincte pour le camp Sud (lettre majuscule) et le camp Nord (lettre minuscule).
+        Ces abréviations sont utilisées dans certains systèmes de notation et d'implémentation,
+        mais ne modifient pas les règles de mouvement décrites dans ce document.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Type de pièce</th>
+            <th>Camp Sud<br>(caractère / abrév.)</th>
+            <th>Camp Nord<br>(caractère / abrév.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Roi</td>
+            <td>仼 — <code>K</code></td>
+            <td>王 — <code>k</code></td>
+          </tr>
+          <tr>
+            <td>Impératrice</td>
+            <td>妃 — <code>E</code></td>
+            <td>騛 — <code>e</code></td>
+          </tr>
+          <tr>
+            <td>Tour</td>
+            <td>俥 — <code>R</code></td>
+            <td>車 — <code>r</code></td>
+          </tr>
+          <tr>
+            <td>Ours</td>
+            <td>雄 — <code>B</code></td>
+            <td>熊 — <code>b</code></td>
+          </tr>
+          <tr>
+            <td>Canon</td>
+            <td>炮 — <code>C</code></td>
+            <td>砲 — <code>c</code></td>
+          </tr>
+          <tr>
+            <td>Cheval</td>
+            <td>傌 — <code>H</code></td>
+            <td>馬 — <code>h</code></td>
+          </tr>
+          <tr>
+            <td>Pion / Soldat</td>
+            <td>兵 — <code>P</code></td>
+            <td>卒 — <code>p</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>3. Principes de mouvement et de capture</h2>
+
+      <ul>
+        <li>À son tour, un joueur déplace une seule pièce de son camp.</li>
+        <li>Un déplacement va d'une case de départ vers une case d'arrivée.</li>
+        <li>Une pièce ne peut pas se déplacer sur une case occupée par une pièce de son propre camp.</li>
+        <li>Si la case d'arrivée contient une pièce ennemie, celle-ci est capturée et retirée de l'échiquier.</li>
+        <li>Sauf indication contraire, les pièces ne peuvent pas « sauter » par-dessus d'autres pièces : toutes les cases intermédiaires doivent être vides.</li>
+        <li>Un coup est illégal s'il place ou laisse le roi du joueur qui joue en échec à la fin du coup.</li>
+      </ul>
+
+      <h3>3.1 Roi</h3>
+
+      <ul>
+        <li>Le roi se déplace d'une case dans n'importe quelle direction : horizontalement, verticalement ou diagonalement.</li>
+        <li>Il ne peut pas sortir de l'échiquier ni se déplacer sur une case occupée par une pièce de son propre camp.</li>
+        <li>Un roi ne peut pas finir son coup sur une case attaquée par une pièce ennemie (auto-échec interdit).</li>
+      </ul>
+
+      <h3>3.2 Tour</h3>
+
+      <ul>
+        <li>La tour se déplace d'un nombre quelconque de cases horizontalement ou verticalement.</li>
+        <li>Elle ne peut pas sauter par-dessus d'autres pièces.</li>
+        <li>Elle capture en se déplaçant sur la case occupée par une pièce ennemie, sur la même rangée ou colonne.</li>
+      </ul>
+
+      <h3>3.3 Ours</h3>
+
+      <ul>
+        <li>L'ours se déplace d'un nombre quelconque de cases en diagonale.</li>
+        <li>Il ne peut pas sauter par-dessus d'autres pièces.</li>
+        <li>Il capture en se déplaçant sur la case occupée par une pièce ennemie sur la diagonale.</li>
+      </ul>
+
+      <h3>3.4 Cheval</h3>
+
+      <p>
+        Le cheval se déplace comme le <em>mǎ</em> (馬/傌) du Xiangqi.
+      </p>
+
+      <ul>
+        <li>Le déplacement se fait en deux étapes conceptuelles :
+          <ul>
+            <li>1 case orthogonalement (haut, bas, gauche ou droite) depuis la case de départ,</li>
+            <li>puis 1 case diagonalement vers l'extérieur à partir de cette case orthogonale.</li>
+          </ul>
+        </li>
+        <li>Le cheval ne saute pas entièrement : la case orthogonale immédiatement adjacente (la « jambe » du cheval) doit être vide. Si cette case est occupée, le déplacement dans cette direction est impossible.</li>
+        <li>La case d'arrivée doit être soit vide, soit occupée par une pièce ennemie (qui est alors capturée).</li>
+      </ul>
+
+      <h3>3.5 Canon</h3>
+
+      <p>
+        Le canon suit les principes du canon du Xiangqi, adaptés au plateau 8×8.
+      </p>
+
+      <ul>
+        <li>Sans capture :
+          <ul>
+            <li>Le canon se déplace comme une tour : d'un nombre quelconque de cases horizontalement ou verticalement, sans sauter de pièce.</li>
+            <li>Toutes les cases intermédiaires doivent être vides.</li>
+          </ul>
+        </li>
+        <li>Avec capture :
+          <ul>
+            <li>Le canon doit se trouver sur la même rangée ou colonne que la pièce ennemie à capturer.</li>
+            <li>Il doit y avoir exactement une pièce (de n'importe quel camp) sur une case intermédiaire entre le canon et la cible : cette pièce est l'« écran ».</li>
+            <li>Il ne doit y avoir aucune autre pièce intermédiaire entre l'écran et la cible.</li>
+            <li>Le canon se déplace directement jusqu'à la case de la pièce ennemie et la capture.</li>
+          </ul>
+        </li>
+        <li>Le canon ne peut pas capturer sans écran, ni si plus d'une pièce se trouve entre lui et la cible.</li>
+      </ul>
+
+      <h3>3.6 Impératrice</h3>
+
+      <p>
+        L'impératrice combine deux modes de déplacement distincts : le déplacement de la tour et un déplacement de type cavalier (déplacement en « L »).
+      </p>
+
+      <ul>
+        <li>
+          À chaque coup, l'impératrice doit choisir l'un des deux modes suivants :
+
+          <dl>
+            <dt>Mode tour</dt>
+            <dd>
+              <ul>
+                <li>l'impératrice se déplace comme une tour (voir 3.2) ;</li>
+                <li>elle se déplace horizontalement ou verticalement d'un nombre quelconque de cases ;</li>
+                <li>elle ne peut pas sauter par-dessus d'autres pièces : toutes les cases intermédiaires doivent être vides ;</li>
+                <li>elle capture en se déplaçant sur la case occupée par une pièce ennemie.</li>
+              </ul>
+            </dd>
+            <dt>Mode cavalier</dt>
+            <dd>
+              <ul>
+                <li>l'impératrice effectue un déplacement composé de deux cases dans une direction orthogonale (haut, bas, gauche ou droite), puis d'une case perpendiculairement à cette direction ;</li>
+                <li>elle peut sauter par-dessus les pièces situées sur les cases intermédiaires ;</li>
+                <li>la case d'arrivée doit être vide ou contenir une pièce ennemie (qui est alors capturée).</li>
+              </ul>
+            </dd>
+          </dl>
+        </li>
+
+        <li>
+          L'impératrice ne peut utiliser qu'un seul mode de déplacement par coup : elle ne peut pas en combiner plusieurs dans un même mouvement.
+        </li>
+
+        <li>
+          Pour déterminer les cases attaquées par une impératrice (notamment pour l'échec), on considère toutes les cases qu'elle peut atteindre soit en mode tour, soit en mode cavalier.
+        </li>
+
+        <li>
+          Le mode cavalier de l'impératrice est distinct du mouvement du cheval décrit en 3.4 : le cheval se déplace d'une case orthogonale puis d'une case diagonale, tandis que le cavalier effectue un déplacement en « L » (deux cases orthogonales puis une case perpendiculaire).
+        </li>
+      </ul>
+
+      <h3>3.7 Pion</h3>
+
+      <p>
+        Les pions sont orientés en sens opposés pour chaque camp.
+      </p>
+
+      <ul>
+        <li>Les pions du camp Sud avancent vers le Nord : de la rangée 3 vers la rangée 8 (numéro de rang croissant).</li>
+        <li>Les pions du camp Nord avancent vers le Sud : de la rangée 6 vers la rangée 1 (numéro de rang décroissant).</li>
+      </ul>
+
+      <h4>3.7.1 Avant la rivière</h4>
+
+      <ul>
+        <li>Un pion du camp Sud est « avant la rivière » tant qu'il se trouve sur les rangées 1 à 4.</li>
+        <li>Un pion du camp Nord est « avant la rivière » tant qu'il se trouve sur les rangées 5 à 8.</li>
+        <li>Avant la rivière, un pion :
+          <ul>
+            <li>se déplace d'une case vers l'avant (même colonne, rang +1 pour le Sud, rang −1 pour le Nord),</li>
+            <li>capture également d'une case vers l'avant (sur la case vers laquelle il avance),</li>
+            <li>ne peut ni reculer, ni se déplacer horizontalement, ni capturer autrement.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h4>3.7.2 Après la rivière</h4>
+
+      <ul>
+        <li>Un pion du camp Sud a « traversé la rivière » dès qu'il atteint la rangée 5 ou au-delà (5 à 8).</li>
+        <li>Un pion du camp Nord a « traversé la rivière » dès qu'il atteint la rangée 4 ou en-deçà (4 à 1).</li>
+        <li>Après la rivière, un pion conserve son mouvement vers l'avant et gagne la possibilité de se déplacer horizontalement :
+          <ul>
+            <li>il peut se déplacer d'une case vers l'avant (comme avant la rivière) ;</li>
+            <li>il peut se déplacer d'une case horizontalement (gauche ou droite) sur la même rangée ;</li>
+            <li>il capture en se déplaçant d'une case vers l'avant ou d'une case horizontalement ;</li>
+            <li>il ne peut toujours pas reculer.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h2>4. Cases attaquées, échec et légalité des coups</h2>
+
+      <h3>4.1 Case attaquée</h3>
+
+      <p>
+        On dit qu'une case est attaquée par un camp donné si, en appliquant les règles de mouvement de ses pièces (3.1 à 3.7),
+        en tenant compte des obstacles, l'une de ces pièces pourrait se déplacer sur cette case pour y capturer une pièce ennemie hypothétique.
+      </p>
+
+      <ul>
+        <li>Pour déterminer si une case est attaquée, on ignore la question de savoir si le déplacement laisserait le roi de ce camp en échec (les clouages ne rendent pas une case « non attaquée »).</li>
+        <li>Les pions attaquent comme ils capturent :
+          <ul>
+            <li>avant la rivière : d'une case vers l'avant ;</li>
+            <li>après la rivière : d'une case vers l'avant ou d'une case horizontalement.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>4.2 Échec</h3>
+
+      <ul>
+        <li>Un roi est en échec si la case qu'il occupe est attaquée par au moins une pièce ennemie.</li>
+        <li>Un coup qui aboutit à une position où le roi du joueur qui vient de jouer est en échec est illégal.</li>
+        <li>Un joueur ne peut donc pas :
+          <ul>
+            <li>ignorer un échec (en jouant un coup qui laisse son roi en échec) ;</li>
+            <li>se mettre volontairement en échec (jouer un coup qui place son roi sur une case attaquée) ;</li>
+            <li>déplacer une pièce qui protégeait son roi si cela expose ce roi à une attaque directe.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>4.3 Réponse à un échec</h3>
+
+      <p>
+        Si, au début de son tour, un joueur a son roi en échec, il doit jouer un coup qui supprime cet échec. Il n'existe que trois types de réponses :
+      </p>
+
+      <ul>
+        <li>déplacer le roi vers une case non attaquée ;</li>
+        <li>capturer la pièce qui donne échec (par le roi ou une autre pièce) ;</li>
+        <li>interposer une pièce entre l'attaquant et le roi, si l'attaque se fait en ligne droite (tour, canon, impératrice en mode tour) ou en diagonale (ours).</li>
+      </ul>
+
+      <p>
+        Si aucune de ces réponses n'est possible par un coup légal, le roi est en échec et mat (voir 6.1).
+      </p>
+
+      <h3>4.4 Règles négatives</h3>
+
+      <ul>
+        <li>Il n'y a pas de roque.</li>
+        <li>Il n'y a pas de prise en passant.</li>
+        <li>Il n'y a pas de réutilisation des pièces capturées.</li>
+        <li>Il n'y a pas de palais : le roi peut se rendre sur toute case légale du plateau.</li>
+        <li>Il n'y a pas de conseillers.</li>
+      </ul>
+
+      <h3>4.5 Interdiction de face-à-face des rois</h3>
+
+      <p>
+        Les deux rois sont dits « en face-à-face » lorsque toutes les conditions suivantes sont réunies :
+      </p>
+
+      <ul>
+        <li>ils occupent la même colonne ;</li>
+        <li>aucune pièce ne se trouve sur les cases intermédiaires entre eux ;</li>
+        <li>le roi sud se trouve sur une rangée inférieure à celle du roi nord (le roi sud regarde vers le nord, le roi nord regarde vers le sud).</li>
+      </ul>
+
+      <p>
+        Il est interdit qu'une position légale présente les deux rois en face-à-face.
+        Aucun coup légal ne peut conduire à une telle position.
+      </p>
+
+      <h2>5. Promotion des pions</h2>
+
+      <ul>
+        <li>Lorsqu'un pion atteint la dernière rangée du camp adverse, dans le cadre d'un coup légal :
+          <ul>
+            <li>pour un pion du Sud : la rangée 8 ;</li>
+            <li>pour un pion du Nord : la rangée 1.</li>
+          </ul>
+        </li>
+        <li>Ce pion doit alors être immédiatement promu : il est retiré de l'échiquier et remplacé, sur la même case, par une nouvelle pièce du même camp.</li>
+        <li>Un pion peut être promu en :
+          <ul>
+            <li>impératrice,</li>
+            <li>canon,</li>
+            <li>tour,</li>
+            <li>ours,</li>
+            <li>cheval.</li>
+          </ul>
+        </li>
+        <li>Le choix de la pièce promue est libre, indépendamment des pièces déjà présentes ou capturées.</li>
+        <li>Il est donc possible d'avoir plusieurs impératrices, plusieurs tours, etc., sur le même camp.</li>
+      </ul>
+
+      <h2>6. Fin de partie</h2>
+
+      <h3>6.1 Victoire par échec et mat</h3>
+
+      <ul>
+        <li>Un camp est en échec et mat lorsque :
+          <ul>
+            <li>son roi est en échec dans la position courante ;</li>
+            <li>et ce camp n'a aucun coup légal permettant de sortir de l'échec.</li>
+          </ul>
+        </li>
+        <li>Dans ce cas, ce camp perd la partie et l'adversaire gagne.</li>
+      </ul>
+
+      <h3>6.2 Pat (stalemate)</h3>
+
+      <ul>
+        <li>On parle de pat lorsque :
+          <ul>
+            <li>c'est le tour d'un camp donné de jouer ;</li>
+            <li>ce camp n'a aucun coup légal ;</li>
+            <li>et son roi n'est pas en échec dans la position courante.</li>
+          </ul>
+        </li>
+        <li>Au Xiongqi, le pat entraîne la défaite du joueur bloqué.</li>
+      </ul>
+
+      <h3>6.3 Nulle par répétition de position</h3>
+
+      <ul>
+        <li>Une position est considérée comme répétée lorsqu'elle est atteinte pour la troisième fois au cours d'une partie (deux occurrences antérieures plus la position courante).</li>
+        <li>Deux positions sont considérées identiques si :
+          <ul>
+            <li>les mêmes pièces des mêmes camps occupent les mêmes cases ;</li>
+            <li>et le même camp a le trait.</li>
+          </ul>
+        </li>
+        <li>Lorsqu'une même position est atteinte pour la troisième fois, la partie doit être déclarée nulle.</li>
+      </ul>
+
+      <h3>6.4 Nulle par insuffisance matérielle</h3>
+
+      <ul>
+        <li>On parle de nulle par insuffisance matérielle lorsque, dans la position courante, aucun des deux camps ne dispose des moyens matériels de mater l'autre, même avec le pire jeu adverse.</li>
+        <li>Autrement dit, il n'existe aucune suite de coups légaux qui puisse conduire à un échec et mat, quel que soit le jeu des deux joueurs.</li>
+        <li>Cela inclut en particulier les positions où il ne reste plus que les deux rois sur l'échiquier.</li>
+        <li>Lorsqu'une telle position est atteinte, la partie doit être déclarée nulle.</li>
+      </ul>
+
+      <p>
+        En dehors de ces cas (échec et mat, pat, nulle par répétition de position, nulle par insuffisance matérielle), la partie peut continuer, sauf si elle s'achève pour une autre raison (abandon, dépassement du temps, nulle d'un commun accord, etc.).
+      </p>
+    </article>
+
+    <hr>
+
+    <nav aria-label="Sélection de langue">
+      <p>Également disponible dans d'autres langues :</p>
+
+      <ul>
+        <li><a title="Passer à l'anglais" href="https://en.xiongqi.page/" lang="en">English</a></li>
+        <li><a title="Passer au chinois" href="https://zh.xiongqi.page/" lang="zh">中文</a></li>
+        <li><a title="Passer au thaï" href="https://th.xiongqi.page/" lang="th">ภาษาไทย</a></li>
+        <li><a title="Passer au japonais" href="https://ja.xiongqi.page/" lang="ja">日本語</a></li>
+      </ul>
+    </nav>
+
+    <hr>
+
+    <footer>
+      <p>
+        Ce jeu trouve son origine dans
+        <a href="legende-urbaine/" title="Le rêve de Zhang" itemprop="isBasedOn" itemscope itemtype="https://schema.org/ShortStory"><span itemprop="name">le rêve troublant d'un paysan nommé Zhang</span></a>.
+        Ses règles, son nom et le logo sont placés dans le domaine public&nbsp;:
+        chacun est libre de les utiliser, les adapter et les diffuser, sur tout support, sans autorisation préalable.
+      </p>
+    </footer>
+  </body>
+</html>
