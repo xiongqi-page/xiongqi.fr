@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" itemscope itemtype="https://schema.org/Game">
+  <head>
+    <title>Xiongqi - Échecs Panda</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Une variante du Xiangqi avec des ours remplaçant les éléphants, jouée sur un plateau 8x8 visant à mettre le roi en échec et mat.">
+    <meta name="keywords" content="Xiangqi, 熊棋, ションチー, Xiongqi, règles, Échecs Panda, jeu">
+
+    <meta property="og:title" content="Xiongqi">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fr.xiongqi.page/">
+    <meta property="og:image" content="https://fr.xiongqi.page/img/xiongqi-starting-position.webp">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Xiongqi - Échecs Panda">
+    <meta name="twitter:image" content="https://fr.xiongqi.page/img/xiongqi-starting-position.webp">
+
+    <link rel="canonical" href="https://fr.xiongqi.page/">
+    <link rel="icon" type="image/svg+xml" sizes="any" href="favicon.svg">
+
+    <link rel="stylesheet" href="css/props.css" type="text/css" media="all">
+    <link rel="stylesheet" href="css/all.css" type="text/css" media="all">
+    <link rel="stylesheet" href="css/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen">
+
+    <link rel="alternate" hreflang="en" href="https://en.xiongqi.page/">
+    <link rel="alternate" hreflang="fr" href="https://fr.xiongqi.page/">
+    <link rel="alternate" hreflang="ja" href="https://ja.xiongqi.page/">
+    <link rel="alternate" hreflang="th" href="https://th.xiongqi.page/">
+    <link rel="alternate" hreflang="zh" href="https://zh.xiongqi.page/">
+    <link rel="alternate" hreflang="x-default" href="https://xiongqi.page/">
+
+    <link rel="canonical" href="https://fr.xiongqi.page/">
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Game",
+        "name": "Xiongqi - Échecs Panda",
+        "alternateName": ["熊棋", "Xiongqi", "Échecs Panda"],
+        "description": "Xiongqi est une variante du Xiangqi (échecs chinois) avec des ours remplaçant les éléphants, jouée sur un plateau 8x8 visant à mettre le roi en échec et mat. Le jeu se joue à deux joueurs et introduit la pièce 'Impératrice' qui combine les mouvements de la Tour et du Cavalier.",
+        "keywords": "Xiangqi, 熊棋, ションチー, Xiongqi, règles, Échecs Panda, jeu, échecs chinois, variante, jeu de plateau",
+        "image": "https://fr.xiongqi.page/img/xiongqi-starting-position.webp",
+        "url": "https://fr.xiongqi.page/",
+        "datePublished": "2019-04-28",
+        "dateModified": "2025-03-15",
+        "numberOfPlayers": {
+          "@type": "QuantitativeValue",
+          "minValue": 2,
+          "maxValue": 2
+        },
+        "inLanguage": "fr",
+        "sameAs": [
+          "https://en.xiongqi.page/",
+          "https://zh.xiongqi.page/",
+          "https://ja.xiongqi.page/",
+          "https://th.xiongqi.page/"
+        ],
+        "about": {
+          "@type": "Thing",
+          "name": "Jeux d'échecs",
+          "description": "Variante inspirée des échecs chinois traditionnels jouée sur un plateau"
+        },
+        "isBasedOn": {
+          "@type": "Game",
+          "name": "Xiangqi",
+          "alternateName": "Échecs chinois"
+        },
+        "creator": {
+          "@type": "Organization",
+          "name": "Communauté Xiongqi"
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://fr.xiongqi.page/"
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <article>
+      <header>
+        <h1>Le Jeu d'Échecs Panda</h1>
+
+        <p>
+          <strong title="Échecs Panda">Xiongqi</strong> (熊棋, pinyin: xióngqí), également appelé <strong>Échecs Panda</strong>, se présente comme une adaptation réfléchie des échecs chinois traditionnels, désormais présentée sur un plateau 8x8.
+          Cet ajustement l'harmonise non seulement avec les normes mondiales du jeu d'échecs, mais introduit également une couche nuancée de stratégie grâce à l'inclusion de la pièce <cite>Impératrice</cite>.
+          Cette pièce, emblème de l'innovation au sein du jeu, invite les joueurs à explorer de nouvelles dimensions stratégiques, tout en respectant l'héritage profond des échecs.
+        </p>
+
+        <p>
+          Bien que le Xiongqi préserve l'essence de la profondeur stratégique du Xiangqi, il enrichit distinctement son récit en s'entremêlant avec des mythes modernes, se distinguant ainsi des jeux aux racines historiques profondément ancrées, comme le Chaturanga.
+          Au cœur de son attrait réside la <a href="/legende-urbaine/" title="Légende urbaine du Xiongqi">légende urbaine</a> de son lien avec la déesse mythique He Xiangu, qui enveloppe le Xiongqi d'un mystère intrigant et l'intègre harmonieusement dans la riche mosaïque du folklore chinois.
+          Cette fusion du mythe avec les aspects tangibles du jeu fait plus qu'ajouter des couches à son contexte ; elle invite les joueurs à un voyage réfléchi à travers la stratégie et la légende, reliant les vénérables traditions du passé aux possibilités du futur.
+        </p>
+      </header>
+
+      <nav aria-label="Table des matières">
+        <h2>Table des matières</h2>
+        <ul>
+          <li><a href="#setup">Mise en place</a></li>
+          <li><a href="#pieces">Pièces</a></li>
+          <li><a href="#rules">Règles</a>
+            <ul>
+              <li><a href="#auspicious-board">Plateau de bon augure</a></li>
+              <li><a href="#royal-duo">Duo royal</a></li>
+              <li><a href="#borderless-gameplay">Jeu sans frontières</a></li>
+              <li><a href="#diagonal-dynamos">Dynamos diagonaux</a></li>
+              <li><a href="#dragon-s-leap">Saut du dragon</a></li>
+              <li><a href="#pawn-ascension">Ascension du pion</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <section id="setup">
+        <h2>Mise en place</h2>
+
+        <table class="squares">
+          <tbody>
+            <tr class="rank">
+              <td class="square" data-coordinate="a8"><img class="piece" draggable="true" data-code="x:r" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/rook.svg" alt="Tour"></td>
+              <td class="square" data-coordinate="b8"><img class="piece" draggable="true" data-code="x:h" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/horse.svg" alt="Cheval"></td>
+              <td class="square" data-coordinate="c8"><img class="piece" draggable="true" data-code="x:b" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/bishop.svg" alt="Fou"></td>
+              <td class="square" data-coordinate="d8"><img class="piece" draggable="true" data-code="x:e" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/empress.svg" alt="Impératrice"></td>
+              <td class="square" data-coordinate="e8"><img class="piece" draggable="true" data-code="x:k^" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/king.svg" alt="Roi"></td>
+              <td class="square" data-coordinate="f8"><img class="piece" draggable="true" data-code="x:b" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/bishop.svg" alt="Fou"></td>
+              <td class="square" data-coordinate="g8"><img class="piece" draggable="true" data-code="x:h" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/horse.svg" alt="Cheval"></td>
+              <td class="square" data-coordinate="h8"><img class="piece" draggable="true" data-code="x:r" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/rook.svg" alt="Tour"></td>
+            </tr>
+
+            <tr class="rank">
+              <td class="square" data-coordinate="a7"></td>
+              <td class="square" data-coordinate="b7"></td>
+              <td class="square" data-coordinate="c7"><img class="piece" draggable="true" data-code="x:c" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/cannon.svg" alt="Canon"></td>
+              <td class="square" data-coordinate="d7"></td>
+              <td class="square" data-coordinate="e7"></td>
+              <td class="square" data-coordinate="f7"><img class="piece" draggable="true" data-code="x:c" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/cannon.svg" alt="Canon"></td>
+              <td class="square" data-coordinate="g7"></td>
+              <td class="square" data-coordinate="h7"></td>
+            </tr>
+
+            <tr class="rank">
+              <td class="square" data-coordinate="a6"><img class="piece" draggable="true" data-code="x:p" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/pawn.svg" alt="Pion"></td>
+              <td class="square" data-coordinate="b6"><img class="piece" draggable="true" data-code="x:p" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/pawn.svg" alt="Pion"></td>
+              <td class="square" data-coordinate="c6"><img class="piece" draggable="true" data-code="x:p" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/pawn.svg" alt="Pion"></td>
+              <td class="square" data-coordinate="d6"><img class="piece" draggable="true" data-code="x:p" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/pawn.svg" alt="Pion"></td>
+              <td class="square" data-coordinate="e6"><img class="piece" draggable="true" data-code="x:p" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/pawn.svg" alt="Pion"></td>
+              <td class="square" data-coordinate="f6"><img class="piece" draggable="true" data-code="x:p" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/pawn.svg" alt="Pion"></td>
+              <td class="square" data-coordinate="g6"><img class="piece" draggable="true" data-code="x:p" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/pawn.svg" alt="Pion"></td>
+              <td class="square" data-coordinate="h6"><img class="piece" draggable="true" data-code="x:p" data-variant="xiongqi" data-side="north" src="img/variant/xiongqi/north/western/pawn.svg" alt="Pion"></td>
+            </tr>
+
+            <tr class="rank">
+              <td class="square" data-coordinate="a5"></td>
+              <td class="square" data-coordinate="b5"></td>
+              <td class="square" data-coordinate="c5"></td>
+              <td class="square" data-coordinate="d5"></td>
+              <td class="square" data-coordinate="e5"></td>
+              <td class="square" data-coordinate="f5"></td>
+              <td class="square" data-coordinate="g5"></td>
+              <td class="square" data-coordinate="h5"></td>
+            </tr>
+
+            <tr class="rank">
+              <td class="square" data-coordinate="a4"></td>
+              <td class="square" data-coordinate="b4"></td>
+              <td class="square" data-coordinate="c4"></td>
+              <td class="square" data-coordinate="d4"></td>
+              <td class="square" data-coordinate="e4"></td>
+              <td class="square" data-coordinate="f4"></td>
+              <td class="square" data-coordinate="g4"></td>
+              <td class="square" data-coordinate="h4"></td>
+            </tr>
+
+            <tr class="rank">
+              <td class="square" data-coordinate="a3"><img class="piece" draggable="true" data-code="X:P" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/pawn.svg" alt="Pion"></td>
+              <td class="square" data-coordinate="b3"><img class="piece" draggable="true" data-code="X:P" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/pawn.svg" alt="Pion"></td>
+              <td class="square" data-coordinate="c3"><img class="piece" draggable="true" data-code="X:P" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/pawn.svg" alt="Pion"></td>
+              <td class="square" data-coordinate="d3"><img class="piece" draggable="true" data-code="X:P" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/pawn.svg" alt="Pion"></td>
+              <td class="square" data-coordinate="e3"><img class="piece" draggable="true" data-code="X:P" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/pawn.svg" alt="Pion"></td>
+              <td class="square" data-coordinate="f3"><img class="piece" draggable="true" data-code="X:P" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/pawn.svg" alt="Pion"></td>
+              <td class="square" data-coordinate="g3"><img class="piece" draggable="true" data-code="X:P" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/pawn.svg" alt="Pion"></td>
+              <td class="square" data-coordinate="h3"><img class="piece" draggable="true" data-code="X:P" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/pawn.svg" alt="Pion"></td>
+            </tr>
+
+            <tr class="rank">
+              <td class="square" data-coordinate="a2"></td>
+              <td class="square" data-coordinate="b2"></td>
+              <td class="square" data-coordinate="c2"><img class="piece" draggable="true" data-code="X:C" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/cannon.svg" alt="Canon"></td>
+              <td class="square" data-coordinate="d2"></td>
+              <td class="square" data-coordinate="e2"></td>
+              <td class="square" data-coordinate="f2"><img class="piece" draggable="true" data-code="X:C" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/cannon.svg" alt="Canon"></td>
+              <td class="square" data-coordinate="g2"></td>
+              <td class="square" data-coordinate="h2"></td>
+            </tr>
+
+            <tr class="rank">
+              <td class="square" data-coordinate="a1"><img class="piece" draggable="true" data-code="X:R" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/rook.svg" alt="Tour"></td>
+              <td class="square" data-coordinate="b1"><img class="piece" draggable="true" data-code="X:H" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/horse.svg" alt="Cheval"></td>
+              <td class="square" data-coordinate="c1"><img class="piece" draggable="true" data-code="X:B" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/bishop.svg" alt="Fou"></td>
+              <td class="square" data-coordinate="d1"><img class="piece" draggable="true" data-code="X:E" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/empress.svg" alt="Impératrice"></td>
+              <td class="square" data-coordinate="e1"><img class="piece" draggable="true" data-code="X:K^" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/king.svg" alt="Roi"></td>
+              <td class="square" data-coordinate="f1"><img class="piece" draggable="true" data-code="X:B" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/bishop.svg" alt="Fou"></td>
+              <td class="square" data-coordinate="g1"><img class="piece" draggable="true" data-code="X:H" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/horse.svg" alt="Cheval"></td>
+              <td class="square" data-coordinate="h1"><img class="piece" draggable="true" data-code="X:R" data-variant="xiongqi" data-side="south" src="img/variant/xiongqi/south/western/rook.svg" alt="Tour"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="pieces">
+        <h2>Pièces</h2>
+
+        <table class="pieces">
+          <caption>
+            Joueur Nord
+          </caption>
+
+          <thead>
+            <tr>
+              <th>Nom chinois</th>
+              <th>Nom français</th>
+              <th>Abrév.</th>
+              <th>Nom occidental</th>
+              <th colspan="2" rowspan="1">Image</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <th>王 (wáng)</th>
+              <td>Roi</td>
+              <td><code>k</code></td>
+              <td>Roi</td>
+              <td><img class="piece" src="img/variant/xiongqi/north/eastern/king.svg" alt="Roi oriental"></td>
+              <td><img class="piece" src="img/variant/xiongqi/north/western/king.svg" alt="Roi occidental"></td>
+            </tr>
+            <tr>
+              <th>騛 (fēi)</th>
+              <td>Lapin volant</td>
+              <td><code>e</code></td>
+              <td>Impératrice</td>
+              <td><img class="piece" src="img/variant/xiongqi/north/eastern/empress.svg" alt="Impératrice orientale"></td>
+              <td><img class="piece" src="img/variant/xiongqi/north/western/empress.svg" alt="Impératrice occidentale"></td>
+            </tr>
+            <tr>
+              <th>車 (jū)</th>
+              <td>Tour</td>
+              <td><code>r</code></td>
+              <td>Tour</td>
+              <td><img class="piece" src="img/variant/xiongqi/north/eastern/rook.svg" alt="Tour orientale"></td>
+              <td><img class="piece" src="img/variant/xiongqi/north/western/rook.svg" alt="Tour occidentale"></td>
+            </tr>
+            <tr>
+              <th>熊 (xióng)</th>
+              <td>Ours</td>
+              <td><code>b</code></td>
+              <td>Fou</td>
+              <td><img class="piece" src="img/variant/xiongqi/north/eastern/bishop.svg" alt="Fou oriental"></td>
+              <td><img class="piece" src="img/variant/xiongqi/north/western/bishop.svg" alt="Fou occidental"></td>
+            </tr>
+            <tr>
+              <th>砲 (pào)</th>
+              <td>Catapulte</td>
+              <td><code>c</code></td>
+              <td>Canon</td>
+              <td><img class="piece" src="img/variant/xiongqi/north/eastern/cannon.svg" alt="Canon oriental"></td>
+              <td><img class="piece" src="img/variant/xiongqi/north/western/cannon.svg" alt="Canon occidental"></td>
+            </tr>
+            <tr>
+              <th>馬 (mǎ)</th>
+              <td>Cavalier</td>
+              <td><code>h</code></td>
+              <td>Cheval</td>
+              <td><img class="piece" src="img/variant/xiongqi/north/eastern/horse.svg" alt="Cheval oriental"></td>
+              <td><img class="piece" src="img/variant/xiongqi/north/western/horse.svg" alt="Cheval occidental"></td>
+            </tr>
+            <tr>
+              <th>卒 (zú)</th>
+              <td>Pion</td>
+              <td><code>p</code></td>
+              <td>Pion</td>
+              <td><img class="piece" src="img/variant/xiongqi/north/eastern/pawn.svg" alt="Pion oriental"></td>
+              <td><img class="piece" src="img/variant/xiongqi/north/western/pawn.svg" alt="Pion occidental"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="pieces">
+          <caption>
+            Joueur Sud
+          </caption>
+
+          <thead>
+            <tr>
+              <th>Nom chinois</th>
+              <th>Nom français</th>
+              <th>Abrév.</th>
+              <th>Nom occidental</th>
+              <th colspan="2" rowspan="1">Image</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <th>仼 (wáng)</th>
+              <td>Monarque</td>
+              <td><code>K</code></td>
+              <td>Roi</td>
+              <td><img class="piece" src="img/variant/xiongqi/south/eastern/king.svg" alt="Roi oriental"></td>
+              <td><img class="piece" src="img/variant/xiongqi/south/western/king.svg" alt="Roi occidental"></td>
+            </tr>
+            <tr>
+              <th>妃 (fēi)</th>
+              <td>Concubine</td>
+              <td><code>E</code></td>
+              <td>Impératrice</td>
+              <td><img class="piece" src="img/variant/xiongqi/south/eastern/empress.svg" alt="Impératrice orientale"></td>
+              <td><img class="piece" src="img/variant/xiongqi/south/western/empress.svg" alt="Impératrice occidentale"></td>
+            </tr>
+            <tr>
+              <th>俥 (jū)</th>
+              <td>Chariot</td>
+              <td><code>R</code></td>
+              <td>Tour</td>
+              <td><img class="piece" src="img/variant/xiongqi/south/eastern/rook.svg" alt="Tour orientale"></td>
+              <td><img class="piece" src="img/variant/xiongqi/south/western/rook.svg" alt="Tour occidentale"></td>
+            </tr>
+            <tr>
+              <th>雄 (xióng)</th>
+              <td>Héros</td>
+              <td><code>B</code></td>
+              <td>Fou</td>
+              <td><img class="piece" src="img/variant/xiongqi/south/eastern/bishop.svg" alt="Fou oriental"></td>
+              <td><img class="piece" src="img/variant/xiongqi/south/western/bishop.svg" alt="Fou occidental"></td>
+            </tr>
+            <tr>
+              <th>炮 (pào)</th>
+              <td>Canon</td>
+              <td><code>C</code></td>
+              <td>Canon</td>
+              <td><img class="piece" src="img/variant/xiongqi/south/eastern/cannon.svg" alt="Canon oriental"></td>
+              <td><img class="piece" src="img/variant/xiongqi/south/western/cannon.svg" alt="Canon occidental"></td>
+            </tr>
+            <tr>
+              <th>傌 (mǎ)</th>
+              <td>Cheval</td>
+              <td><code>H</code></td>
+              <td>Cheval</td>
+              <td><img class="piece" src="img/variant/xiongqi/south/eastern/horse.svg" alt="Cheval oriental"></td>
+              <td><img class="piece" src="img/variant/xiongqi/south/western/horse.svg" alt="Cheval occidental"></td>
+            </tr>
+            <tr>
+              <th>兵 (bīng)</th>
+              <td>Soldat</td>
+              <td><code>P</code></td>
+              <td>Pion</td>
+              <td><img class="piece" src="img/variant/xiongqi/south/eastern/pawn.svg" alt="Soldat oriental"></td>
+              <td><img class="piece" src="img/variant/xiongqi/south/western/pawn.svg" alt="Soldat occidental"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="rules">
+        <h2>Règles</h2>
+
+        <p>
+          Le Xiongqi reflète l'essence du Xiangqi traditionnel, subtilement infusé d'innovations stratégiques et de nuances culturelles qui renforcent sa profondeur et son attrait.
+        </p>
+      </section>
+
+      <section id="auspicious-board">
+        <h3>Plateau de bon augure</h3>
+
+        <p>
+          Placé sur un plateau 8x8, le Xiongqi marie la disposition d'échecs familière avec des éléments de prospérité et de renouveau, incarnant le symbolisme profond entrelacé dans la culture chinoise.
+        </p>
+      </section>
+
+      <section id="royal-duo">
+        <h3>Duo royal</h3>
+
+        <p>
+          Au cœur du Xiongqi, le couple royal enrichit le jeu avec profondeur et une touche d'histoire :
+        </p>
+
+        <ul>
+          <li>L'Impératrice mélange habilement le mouvement linéaire de la Tour, commun aux échecs occidentaux et chinois, avec la dynamique distincte du Cavalier des échecs occidentaux, créant une pièce qui incarne la versatilité stratégique.</li>
+          <li>Le Roi marque un retour historique sur le plateau, un clin d'œil aux temps anciens où la figure du Roi était remplacée par le caractère du Général pour se conformer aux édits royaux. Cette pièce, autrefois interdite sous peine de châtiment sévère, se déplace maintenant avec la dignité connue dans les échecs occidentaux, symbolisant la résilience et l'esprit durable du riche patrimoine du jeu.</li>
+        </ul>
+      </section>
+
+      <section id="borderless-gameplay">
+        <h3>Jeu sans frontières</h3>
+
+        <p>
+          Dans Xiongqi, les contraintes conventionnelles sont levées ; ni la rivière ni le palais ne confinent les pièces, facilitant un mouvement fluide à travers le plateau.
+          Pourtant, la tradition de donner du pouvoir aux pions lors de la traversée de la rivière est préservée, leur accordant une importance stratégique accrue grâce à des mouvements latéraux ajoutés.
+        </p>
+      </section>
+
+      <section id="diagonal-dynamos">
+        <h3>Dynamos diagonaux</h3>
+
+        <p>
+          Xiongqi remplace les Éléphants du Xiangqi par des Pandas, servant de Fous qui se déplacent en diagonale et traversent les rivières.
+          Ce changement introduit non seulement de nouvelles couches stratégiques mais reflète également son homonyme, Xiongqi (熊棋), honorant l'importance culturelle du Panda en Chine et enrichissant l'identité du jeu.
+        </p>
+      </section>
+
+      <section id="dragon-s-leap">
+        <h3>Saut du dragon</h3>
+
+        <p>
+          Une règle unique entre en jeu lorsque les deux Rois se tiennent sans obstruction sur la même colonne ou rangée — la manœuvre du Roi Volant.
+          Cette stratégie remarquable métamorphose le Roi actif en Dragon, lui accordant le pouvoir de sauter à travers le plateau pour une capture décisive.
+          Pourtant, l'acte même de mettre en place cette scène reflète un auto-échec, faisant du mouvement un paradoxe stratégique non autorisé par les lois du jeu.
+        </p>
+      </section>
+
+      <section id="pawn-ascension">
+        <h3>Ascension du pion</h3>
+
+        <p>
+          Comme aux échecs occidentaux, lorsqu'un Pion avance jusqu'à sa huitième rangée, dans le cadre du mouvement, il est promu et doit être échangé contre l'Impératrice, la Tour, le Fou, le Cheval ou le Canon du joueur, de la même couleur.
+          Habituellement, le Pion est choisi pour être promu en Impératrice, mais dans certains cas, une autre pièce est choisie ; c'est ce qu'on appelle la sous-promotion.
+          Il n'y a pas de restriction sur la pièce promue, il est donc possible d'avoir plus de pièces du même type qu'au début du jeu (par exemple, deux Impératrices ou plus).
+        </p>
+      </section>
+    </article>
+
+    <aside>
+      <h2>Voir aussi</h2>
+      <p>Découvrez ces variantes culturelles de jeux d'échecs :</p>
+
+      <ul>
+        <li>
+          <strong><a href="https://fr.ogi.page/">Ōgi (王棋)</a></strong> — Le <q>Jeu du Roi</q>, une variante japonaise dérivée du Shōgi, jouée sur un plateau réduit avec la possibilité de réutiliser les pièces capturées.
+        </li>
+        <li>
+          <strong><a href="https://fr.chess.page/">Échecs</a></strong> — Le <q>Roi des Jeux</q>, la variante occidentale classique jouée sur un plateau 8×8.
+        </li>
+      </ul>
+    </aside>
+
+    <nav aria-label="Sélection de langue">
+      <p>Également disponible dans d'autres langues :</p>
+
+      <ul>
+        <li><a title="Passer à l'anglais" href="https://en.xiongqi.page/" lang="en">English</a></li>
+        <li><a title="Passer au chinois" href="https://zh.xiongqi.page/" lang="zh">中文</a></li>
+        <li><a title="Passer au thaï" href="https://th.xiongqi.page/" lang="th">ภาษาไทย</a></li>
+        <li><a title="Passer au japonais" href="https://ja.xiongqi.page/" lang="ja">日本語</a></li>
+      </ul>
+    </nav>
+
+    <script type="module">
+      import { initializeGame } from './js/game.js';
+      initializeGame();
+    </script>
+  </body>
+</html>
